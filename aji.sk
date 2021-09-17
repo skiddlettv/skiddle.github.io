@@ -1,0 +1,25 @@
+on join:
+  if contains({accounts.%ip of player%::*}, player) is false:
+    add player to {accounts.%ip of player%::*}
+  wait 10 ticks
+  loop all players:
+    if player has the permission "aji.bypass":
+      stop
+    else if loop-player has the permission "aji.see":
+      send "&7Profil von &e%player%" to loop-player
+      send "" to loop-player
+      send "&eIP: %ip of player%" to loop-player
+      send "&eUUID: %uuid of player%" to loop-player
+      send "&eBisher gejointe Accounts von dieser IP: " to loop-player
+      send "" to loop-player
+      loop {accounts.%ip of player%::*}:
+        send "&7- &e%loop-value-2%" to loop-player
+function contains(list: objects, check: object) :: boolean:
+    loop {_list::*}:
+        if loop-value is {_check}:
+            return true
+    return false
+command /ajireset [<player>]:
+  permission: op
+  trigger:
+    clear {accounts.%ip of player%::*}
